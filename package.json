@@ -1,6 +1,6 @@
 {
     "name": "vote-tracker",
-    "version": "6.0.0",
+    "version": "6.0.1",
     "description": "A professional npm package for tracking votes",
     "typings": "typings.d.ts",
     "main": "src/index.js",
