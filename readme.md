@@ -76,6 +76,14 @@ const voteTracker = new VoteTracker(client, {
     color: '#333333', // Optional, specify embed color
     port: '3000', // Optional, specify port number
     reminder: true, // Do you want to enable reminders? This means if you want to remind a user to vote again after 12 hours, set it to true. Otherwise, set it to false. Its default value is true.
+    reminderDelayHours: 12, // Optional, how many hours before sending a reminder.
+    stats: {
+        enabled: true,
+        endpoint: '/stats', // Optional: expose an HTTP endpoint for vote stats.
+        authToken: 'YOUR_STATS_TOKEN', // Optional: protect the stats endpoints.
+        leaderboardSize: 10,
+        streakWindowHours: 14
+    }
 });
 
 client.on('ready', () => {
@@ -112,6 +120,14 @@ const options: VoteTrackerOptions = {
     color: '#333333', // Optional, specify embed color
     port: '3000', // Optional, specify port number
     reminder: true, // Do you want to enable reminders? This means if you want to remind a user to vote again after 12 hours, set it to true. Otherwise, set it to false. Its default value is true.
+    reminderDelayHours: 12, // Optional, how many hours before sending a reminder.
+    stats: {
+        enabled: true,
+        endpoint: '/stats', // Optional: expose an HTTP endpoint for vote stats.
+        authToken: 'YOUR_STATS_TOKEN', // Optional: protect the stats endpoints.
+        leaderboardSize: 10,
+        streakWindowHours: 14
+    }
 };
 
 // Create an instance of VoteTracker
@@ -149,6 +165,30 @@ With this example, your webhook dashboard should look like this:
     - `color`: Optional. The color of the embeds. Defaults to '#333333'.
     - `port`: Optional. The port number. Defaults to '3000'.
     - `reminder`: Do you want to enable reminders? This means if you want to remind a user to vote again after 12 hours, set it to true. Otherwise, set it to false. Its default value is true.
+    - `reminderDelayHours`: Optional. How many hours before sending a reminder. Defaults to 12.
+    - `stats`: Optional. Vote stats configuration.
+        - `enabled`: Enable in-memory vote stats.
+        - `endpoint`: Optional. Expose vote stats at this HTTP endpoint (ex: `/stats`).
+        - `authToken`: Optional. Protect the stats endpoints with `Authorization: Bearer <token>`.
+        - `leaderboardSize`: Optional. Default leaderboard size. Defaults to 10.
+        - `streakWindowHours`: Optional. Hours window to keep streaks alive. Defaults to 14.
+
+#### Stats endpoints
+
+When `stats.endpoint` is set, VoteTracker exposes:
+
+- `GET /stats` -> Overall totals.
+- `GET /stats/leaderboard?limit=10` -> Top voters.
+- `GET /stats/users/:id` -> Per-user stats.
+
+If you set `stats.authToken`, include `Authorization: Bearer YOUR_STATS_TOKEN`.
+
+#### Events
+
+VoteTracker extends `EventEmitter` and emits:
+
+- `vote`: `{ user, guild, vote, stats }`
+- `error`: `Error`
 
 
 ### Example
@@ -168,6 +208,14 @@ const voteTracker = new VoteTracker(client, {
     color: '#333333', // Optional, specify embed color
     port: '3000', // Optional, specify port number
     reminder: true, // Do you want to enable reminders? This means if you want to remind a user to vote again after 12 hours, set it to true. Otherwise, set it to false. Its default value is true.
+    reminderDelayHours: 12, // Optional, how many hours before sending a reminder.
+    stats: {
+        enabled: true,
+        endpoint: '/stats', // Optional: expose an HTTP endpoint for vote stats.
+        authToken: 'YOUR_STATS_TOKEN', // Optional: protect the stats endpoints.
+        leaderboardSize: 10,
+        streakWindowHours: 14
+    }
 
 });
 
@@ -190,6 +238,14 @@ const options: VoteTrackerOptions = {
     color: '#333333', // Optional, specify embed color
     port: '3000', // Optional, specify port number
     reminder: true, // Do you want to enable reminders? This means if you want to remind a user to vote again after 12 hours, set it to true. Otherwise, set it to false. Its default value is true.
+    reminderDelayHours: 12, // Optional, how many hours before sending a reminder.
+    stats: {
+        enabled: true,
+        endpoint: '/stats', // Optional: expose an HTTP endpoint for vote stats.
+        authToken: 'YOUR_STATS_TOKEN', // Optional: protect the stats endpoints.
+        leaderboardSize: 10,
+        streakWindowHours: 14
+    }
 };
 
 // Create an instance of VoteTracker

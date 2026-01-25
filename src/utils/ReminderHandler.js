@@ -1,18 +1,24 @@
 const { EmbedBuilder } = require('discord.js')
 
 module.exports = class VoteReminder {
-    constructor(user, client, guild, role, reminder, color) {
+    constructor(user, client, guild, role, reminder, color, reminderDelayMs) {
         this.user = user;
         this.client = client;
         this.guild = guild;
         this.role = role;
         this.reminder = reminder;
         this.color = color;
+        this.reminderDelayMs = reminderDelayMs;
     }
 
     async setReminder() {
         setTimeout(async () => {
             try {
+                if (!this.client?.user) {
+                    console.error("VoteTracker: Discord client is not ready yet.");
+                    return;
+                }
+
                 const embed = new EmbedBuilder()
                     .setColor(this.color)
                     .setAuthor({ name: `${this.client.user.username}`, iconURL: this.client.user.displayAvatarURL() })
@@ -21,7 +27,7 @@ module.exports = class VoteReminder {
                     .setFooter({ text: `Thank you so much for your support!`, iconURL: this.client.user.displayAvatarURL() })
                     .setTimestamp();
                 
-                if (this.reminder == true) {
+                if (this.reminder === true) {
                     const dmChannel = await this.user.createDM();
                     await dmChannel.send({ embeds: [embed] });
                     if (this.role) {
@@ -32,11 +38,8 @@ module.exports = class VoteReminder {
                             console.error(`Error removing role to member: ${error.message}`);
                             return;
                         }
-                    } else {
-                        console.error(`Invalid role Id: ${this.role.id}`);
-                        return;
                     }
-                } else if (this.reminder == false) {
+                } else if (this.reminder === false) {
                     if (this.role) {
                         try {
                             const member = await this.guild.members.fetch(this.user.id);
@@ -45,15 +48,12 @@ module.exports = class VoteReminder {
                             console.error(`Error removing role to member: ${error.message}`);
                             return;
                         }
-                    } else {
-                        console.error(`Invalid role Id: ${this.role.id}`);
-                        return;
                     }
                 }
             } catch (error) {
                 console.error(`Error sending DM to user: ${error.message}`);
             }
 
-        }, 12 * 60 * 60 * 1000);
+        }, this.reminderDelayMs);
     }
 }
