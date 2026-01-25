@@ -14,6 +14,11 @@ module.exports = class PostHandler {
     }
 
     async handlePost() {
+        if (!this.client?.user) {
+            console.error("VoteTracker: Discord client is not ready yet.");
+            return;
+        }
+
         const embed = new EmbedBuilder()
             .setColor(this.embedcolor)
             .setAuthor({ name: `${this.client.user.username}!`, iconURL: this.client.user.displayAvatarURL({ size: 4096 }) })
@@ -26,7 +31,7 @@ module.exports = class PostHandler {
                 await this.channel.send({ embeds: [embed] });
 
             } else {
-                console.error(`Invalid vote log channel: ${this.channel.id}`);
+                console.error("Invalid vote log channel.");
                 return;
             }
         } else if (this.postmode === "webhook") {
@@ -34,7 +39,7 @@ module.exports = class PostHandler {
                 await this.webhook.edit({ name: `${this.user.username} | Vote-Tracker`, avatar: this.user.displayAvatarURL() });
                 await this.webhook.send({ embeds: [embed] });
             } else {
-                console.error(`Invalid webhook Url: ${this.webhook}`);
+                console.error("Invalid webhook URL.");
                 return;
             }
         } else {
@@ -49,9 +54,6 @@ module.exports = class PostHandler {
                 console.error(`Error adding role to member: ${error.message}`);
                 return;
             }
-        } else {
-            console.error(`Invalid role Id: ${this.role.id}`);
-            return;
         }
     }
 }
