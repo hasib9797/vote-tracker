@@ -1,0 +1,72 @@
+name: Bug report
+description: Report a reproducible problem in Vote Tracker
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a problem. Remove all tokens, webhook secrets, and private user data.
+  - type: input
+    id: version
+    attributes:
+      label: Vote Tracker version
+      placeholder: 8.0.0
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node.js version
+      placeholder: 20.20.0
+    validations:
+      required: true
+  - type: input
+    id: discordjs
+    attributes:
+      label: Discord.js version
+      placeholder: 14.26.4
+    validations:
+      required: true
+  - type: dropdown
+    id: webhook
+    attributes:
+      label: Top.gg webhook version
+      options:
+        - v1
+        - v0 legacy
+        - Not applicable
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem
+      description: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include sanitized configuration and exact steps.
+      render: javascript
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues.
+          required: true
+        - label: I removed all credentials and private data.
+          required: true
+        - label: I tested with the latest stable Vote Tracker version.
+          required: true

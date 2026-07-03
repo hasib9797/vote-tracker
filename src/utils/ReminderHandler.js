@@ -12,7 +12,11 @@ module.exports = class VoteReminder {
     }
 
     async setReminder() {
-        setTimeout(async () => {
+        if (!this.role && !this.reminder) {
+            return null;
+        }
+
+        const timer = setTimeout(async () => {
             try {
                 if (!this.client?.user) {
                     console.error("VoteTracker: Discord client is not ready yet.");
@@ -55,5 +59,7 @@ module.exports = class VoteReminder {
             }
 
         }, this.reminderDelayMs);
+        timer.unref?.();
+        return timer;
     }
 }

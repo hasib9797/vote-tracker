@@ -1,0 +1,47 @@
+name: Feature request
+description: Propose an improvement to Vote Tracker
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What user problem should this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the API and user experience you have in mind.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: dropdown
+    id: area
+    attributes:
+      label: Feature area
+      options:
+        - Top.gg API or webhooks
+        - Discord UI or commands
+        - Rewards or reminders
+        - Statistics
+        - TypeScript
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: checkboxes
+    id: compatibility
+    attributes:
+      label: Compatibility
+      options:
+        - label: I considered whether this changes the public API.
+          required: true
+        - label: I searched existing issues and pull requests.
+          required: true
