@@ -1,6 +1,6 @@
 {
     "name": "vote-tracker",
-    "version": "8.0.0",
+    "version": "8.0.1",
     "description": "Track, reward, and query Top.gg votes for Discord bots",
     "types": "typings.d.ts",
     "main": "src/index.js",
